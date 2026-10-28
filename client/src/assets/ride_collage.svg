@@ -1,0 +1,88 @@
+<svg width="960" height="420" viewBox="0 0 960 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Everyday vehicles on RideShare</title>
+  <desc id="desc">A friendly illustration of a compact car, scooter, motorcycle, bicycle and practical van.</desc>
+  <defs>
+    <linearGradient id="carBody" x1="90" y1="240" x2="410" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBBF24"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <linearGradient id="vanBody" x1="610" y1="110" x2="890" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="bikeBody" x1="500" y1="250" x2="790" y2="375" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34D399"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="180%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#062C3A" flood-opacity=".22"/>
+    </filter>
+  </defs>
+
+  <circle cx="155" cy="105" r="86" fill="#FDE68A" fill-opacity=".35"/>
+  <circle cx="810" cy="100" r="110" fill="#BAE6FD" fill-opacity=".35"/>
+  <path d="M75 377C230 348 364 405 515 374C674 342 779 352 914 375" stroke="#0F766E" stroke-opacity=".16" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Compact hatchback -->
+  <g filter="url(#shadow)">
+    <path d="M76 298C90 254 129 226 182 222L273 216C303 214 327 227 350 252L387 291C400 304 407 323 407 342H69C66 324 68 309 76 298Z" fill="url(#carBody)"/>
+    <path d="M160 226L187 226L272 220C296 219 310 229 329 251L339 263H131C138 246 147 235 160 226Z" fill="#DBF4FA" fill-opacity=".94"/>
+    <path d="M181 229L199 227L214 261H143C153 242 164 233 181 229Z" fill="#163B4A" fill-opacity=".82"/>
+    <path d="M220 226L270 223C291 222 303 231 318 249L327 261H228L220 226Z" fill="#163B4A" fill-opacity=".82"/>
+    <path d="M79 295H397" stroke="#FFF7D6" stroke-opacity=".7" stroke-width="5"/>
+    <rect x="71" y="280" width="35" height="20" rx="10" fill="#FDE68A"/>
+    <rect x="371" y="280" width="29" height="18" rx="9" fill="#FDBA74"/>
+    <circle cx="133" cy="340" r="31" fill="#12303C"/>
+    <circle cx="133" cy="340" r="15" fill="#CBD5E1"/>
+    <circle cx="341" cy="340" r="31" fill="#12303C"/>
+    <circle cx="341" cy="340" r="15" fill="#CBD5E1"/>
+    <path d="M88 316H105" stroke="#FFF" stroke-opacity=".9" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Scooter -->
+  <g transform="translate(365 42)" filter="url(#shadow)">
+    <circle cx="46" cy="112" r="20" fill="#153B48"/>
+    <circle cx="181" cy="112" r="20" fill="#153B48"/>
+    <path d="M45 105C80 105 100 103 116 92L145 72L161 94H180" stroke="#F97316" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M107 91L124 45C129 31 142 24 157 26L179 30" stroke="#F97316" stroke-width="12" stroke-linecap="round"/>
+    <path d="M155 29L180 29L196 51" stroke="#153B48" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M68 105L82 78H126L147 96L127 107H83" fill="#FB923C"/>
+    <path d="M90 78L106 56H136L125 78H90Z" fill="#DDF7FA"/>
+    <circle cx="187" cy="48" r="9" fill="#FDE68A"/>
+  </g>
+
+  <!-- Practical van -->
+  <g filter="url(#shadow)">
+    <path d="M586 168C599 134 632 113 674 111H829C864 111 889 131 905 160L924 194V233H578V190L586 168Z" fill="url(#vanBody)"/>
+    <path d="M638 121H681V177H606C614 149 623 132 638 121Z" fill="#D9F5FC" fill-opacity=".96"/>
+    <path d="M694 121H759V177H694V121Z" fill="#D9F5FC" fill-opacity=".96"/>
+    <path d="M771 121H823C846 121 864 132 879 154L891 177H771V121Z" fill="#D9F5FC" fill-opacity=".96"/>
+    <path d="M588 188H916" stroke="#E0F2FE" stroke-opacity=".8" stroke-width="6"/>
+    <circle cx="644" cy="235" r="29" fill="#153B48"/>
+    <circle cx="644" cy="235" r="14" fill="#CBD5E1"/>
+    <circle cx="861" cy="235" r="29" fill="#153B48"/>
+    <circle cx="861" cy="235" r="14" fill="#CBD5E1"/>
+    <rect x="889" y="187" width="25" height="18" rx="8" fill="#BAE6FD"/>
+  </g>
+
+  <!-- Commuter bicycle -->
+  <g transform="translate(445 238)" filter="url(#shadow)">
+    <circle cx="44" cy="103" r="39" stroke="#12303C" stroke-width="8"/>
+    <circle cx="224" cy="103" r="39" stroke="#12303C" stroke-width="8"/>
+    <path d="M44 103L100 43L146 103L224 103L168 43L100 43L146 103" stroke="url(#bikeBody)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M100 43L83 14M82 14H119M168 43L180 11M174 11H205" stroke="#12303C" stroke-width="8" stroke-linecap="round"/>
+    <path d="M142 103L125 129M112 129H143" stroke="#12303C" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="100" cy="43" r="10" fill="#FBBF24"/>
+    <path d="M91 35L121 28" stroke="#FBBF24" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- Small motorcycle -->
+  <g transform="translate(742 265)" filter="url(#shadow)">
+    <circle cx="39" cy="84" r="26" fill="#153B48"/>
+    <circle cx="192" cy="84" r="26" fill="#153B48"/>
+    <path d="M39 84L84 45L129 78L192 84L154 51L110 53L84 45" stroke="#F43F5E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M84 45L97 16H130L147 49M147 49L175 28" stroke="#153B48" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M74 52L119 51L143 74H101L74 52Z" fill="#FB7185"/>
+    <circle cx="178" cy="28" r="8" fill="#FDE68A"/>
+  </g>
+</svg>

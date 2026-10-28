@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+@import "tailwindcss";
+
+/* Keep Tailwind's dark utilities in sync with the app toggle, not the OS preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #0f766e;
+  --color-primary-dull: #0b5f59;
+  --color-accent: #f28c28;
+  --color-light: #f4f8f6;
+  --color-borderColor: #cbd8d4;
+}
+
+:root {
+  --app-bg: #f5faf8;
+  --app-surface: #ffffff;
+  --app-surface-soft: #edf7f3;
+  --app-border: #d6e3df;
+  --app-ink: #17211f;
+  --app-muted: #64736f;
+  --app-shadow: 0 18px 50px rgba(15, 118, 110, 0.08);
+}
+
+html {
+  background: var(--app-bg);
+  scroll-behavior: smooth;
+}
+
+* { font-family: "Outfit", sans-serif; }
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-ink);
+  text-rendering: optimizeLegibility;
+}
+
+button, a, select, input, textarea {
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid rgba(15, 118, 110, 0.28);
+  outline-offset: 2px;
+}
+
+::selection { background: rgba(15, 118, 110, 0.2); color: var(--app-ink); }
+
+.surface-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  box-shadow: var(--app-shadow);
+}
+
+.section-kicker {
+  color: #0f766e;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+html.dark {
+  --app-bg: #0b1220;
+  --app-surface: #111c2b;
+  --app-surface-soft: #17293a;
+  --app-border: #304457;
+  --app-ink: #f2f7f6;
+  --app-muted: #a8bac1;
+  --app-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+}
+
+html.dark body { background: var(--app-bg); color: var(--app-ink); }
+html.dark .bg-white { background-color: var(--app-surface); }
+html.dark .bg-light { background-color: var(--app-surface-soft); }
+html.dark .text-gray-900, html.dark .text-gray-800, html.dark .text-gray-700 { color: #f2f7f6; }
+html.dark .text-gray-600, html.dark .text-gray-500, html.dark .text-gray-400, html.dark .text-gray-300 { color: var(--app-muted); }
+html.dark .text-gray-200 { color: #dbe8e8; }
+html.dark .border-borderColor, html.dark .border-gray-300 { border-color: var(--app-border); }
+html.dark input, html.dark textarea, html.dark select { background-color: #0f1a28; color: #f2f7f6; border-color: var(--app-border); }
+html.dark input::placeholder, html.dark textarea::placeholder { color: #8fa5ad; }
+html.dark .shadow-lg, html.dark .shadow-xl, html.dark .shadow-2xl, html.dark .shadow-sm { box-shadow: var(--app-shadow); }
+html.dark .hover\\:bg-gray-50:hover, html.dark .hover\\:bg-slate-100:hover { background-color: #203247; }
+html.dark .bg-red-50 { background-color: rgba(127, 29, 29, 0.28); }
+html.dark .text-red-700, html.dark .text-red-600 { color: #fca5a5; }
+html.dark .bg-green-100 { background-color: rgba(20, 83, 45, 0.38); }
+html.dark .text-green-700, html.dark .text-green-600 { color: #86efac; }
+html.dark .bg-amber-100, html.dark .bg-yellow-100 { background-color: rgba(120, 53, 15, 0.36); }
+html.dark .text-amber-700, html.dark .text-yellow-700 { color: #fcd34d; }
+html.dark .bg-white\/90 { background-color: rgba(17, 28, 43, 0.92); }
+html.dark .bg-white\/70, html.dark .bg-white\/60 { background-color: rgba(17, 28, 43, 0.78); }
+html.dark .bg-white\/40 { background-color: rgba(17, 28, 43, 0.35); }
+html.dark .bg-light\/40 { background-color: rgba(11, 18, 32, 0.4); }
+html.dark .bg-light\/60, html.dark .bg-light\/50 { background-color: rgba(23, 41, 58, 0.72); }
+html.dark .text-gray-500\/90, html.dark .text-gray-500\/80 { color: var(--app-muted); }
