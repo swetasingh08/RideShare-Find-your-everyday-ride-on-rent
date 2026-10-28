@@ -17,11 +17,5 @@
             "src": "/(.*)",
             "dest": "server.js"
         }
-    ],
-    "crons": [
-        {
-            "path": "/api/cron/pricing",
-            "schedule": "30 21 * * *"
-        }
     ]
 }

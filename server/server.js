@@ -14,8 +14,6 @@ import aiRouter from "./routes/aiRoutes.js";
 import pricingRouter from "./routes/pricingRoutes.js";
 import locationRouter from "./routes/locationRoutes.js";
 import invoiceRouter from "./routes/invoiceRoutes.js";
-import { startPricingJob } from "./jobs/pricingJob.js";
-import { refreshAllPricingSuggestions } from "./services/pricingService.js";
 
 // Initialize Express App
 const app = express()
@@ -41,24 +39,8 @@ app.use('/api/pricing', pricingRouter)
 app.use('/api/locations', locationRouter)
 app.use('/api/invoices', invoiceRouter)
 
-app.get('/api/cron/pricing', async (req, res) => {
-    const cronSecret = process.env.CRON_SECRET;
-    const authorization = req.headers.authorization;
-    if (process.env.VERCEL && (!cronSecret || authorization !== `Bearer ${cronSecret}`)) {
-        return res.status(401).json({ success: false, message: "Unauthorized" });
-    }
-
-    try {
-        const count = await refreshAllPricingSuggestions();
-        res.json({ success: true, refreshed: count });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-});
-
 const PORT = process.env.PORT || 3000;
 if (!process.env.VERCEL) {
-    startPricingJob();
     app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`));
 }
 
