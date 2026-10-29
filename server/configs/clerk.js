@@ -19,7 +19,7 @@ export const organizationId = process.env.CLERK_ORG_ID;
 // obtains a session token on a sibling Clerk app could replay it against us.
 export const authorizedParties = (process.env.CLERK_AUTHORIZED_PARTIES || "http://localhost:5173")
     .split(",")
-    .map((origin) => origin.trim())
+    .map((origin) => origin.trim().replace(/\/+$/, ""))
     .filter(Boolean);
 
 export const roleKeys = {

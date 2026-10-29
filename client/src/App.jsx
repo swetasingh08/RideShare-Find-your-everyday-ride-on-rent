@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Navbar from './components/Navbar'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import CarDetails from './pages/CarDetails'
 import Cars from './pages/Cars'
@@ -21,9 +21,7 @@ import AboutUs from './pages/AboutUs'
 import ProfileCompletionPage from './pages/ProfileCompletionPage'
 import { Toaster } from 'react-hot-toast'
 import AIChatbot from './components/AIChatbot'
-import { SignUp, UserProfile } from '@clerk/clerk-react'
-
-const signInUrl = import.meta.env.VITE_CLERK_SIGN_IN_URL || '/sign-in'
+import { UserProfile } from '@clerk/clerk-react'
 
 const App = () => {
 
@@ -81,7 +79,9 @@ const App = () => {
           and accepted invitations resolve instead of falling through to 404. */}
       <Route path='/sign-in/*' element={<SignInPage />} />
       <Route path='/request-access' element={<AccessRequestPage />} />
-      <Route path='/sign-up/*' element={<SignUp routing="path" path="/sign-up" signInUrl={signInUrl} />} />
+      {/* Access is invitation-only. Do not let Clerk's public sign-up flow
+          create an organization and silently make the new person an admin. */}
+      <Route path='/sign-up/*' element={<Navigate to="/request-access" replace />} />
       <Route path='/user-profile/*' element={<UserProfile routing="path" path="/user-profile" />} />
       <Route path='*' element={<Home/>}/>
     </Routes>
