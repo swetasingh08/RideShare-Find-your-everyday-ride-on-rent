@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import { useAppContext } from '../context/AppContext'
 
 const ProfileCompletionPage = () => {
-  const { axios, user, setUser, isLoaded, isSignedIn, isUserLoading } = useAppContext()
+  const { axios, user, setUser, fetchUser, isLoaded, isSignedIn, isUserLoading, userLoadError } = useAppContext()
   const navigate = useNavigate()
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState({ name: '', phone: '', city: '', occupation: '', age: '' })
@@ -21,7 +21,17 @@ const ProfileCompletionPage = () => {
   }, [user])
 
   if (isLoaded && !isSignedIn) return <Navigate to='/sign-in' replace />
-  if (!isLoaded || isUserLoading || !user) return <div className='flex min-h-[70vh] items-center justify-center text-gray-500'>Loading profile...</div>
+  if (!isLoaded || isUserLoading) return <div className='flex min-h-[70vh] items-center justify-center text-gray-500'>Loading profile...</div>
+  if (!user) return (
+    <main className='flex min-h-[70vh] flex-col items-center justify-center gap-4 px-6 text-center'>
+      <h1 className='text-2xl font-semibold text-gray-800'>Profile could not be loaded</h1>
+      <p className='max-w-xl text-sm text-gray-500'>{userLoadError || 'The RideShare API did not return your account.'}</p>
+      <div className='flex flex-wrap justify-center gap-3'>
+        <button type='button' onClick={fetchUser} className='rounded-xl bg-primary px-5 py-3 font-semibold text-white'>Try again</button>
+        <button type='button' onClick={() => navigate('/sign-in')} className='rounded-xl border border-borderColor px-5 py-3 font-semibold text-gray-700'>Return to sign in</button>
+      </div>
+    </main>
+  )
 
   const update = (key, value) => setForm(current => ({ ...current, [key]: value }))
 

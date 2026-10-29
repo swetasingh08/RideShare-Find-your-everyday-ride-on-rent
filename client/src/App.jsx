@@ -23,6 +23,8 @@ import { Toaster } from 'react-hot-toast'
 import AIChatbot from './components/AIChatbot'
 import { SignUp, UserProfile } from '@clerk/clerk-react'
 
+const signInUrl = import.meta.env.VITE_CLERK_SIGN_IN_URL || '/sign-in'
+
 const App = () => {
 
   const location = useLocation()
@@ -79,7 +81,7 @@ const App = () => {
           and accepted invitations resolve instead of falling through to 404. */}
       <Route path='/sign-in/*' element={<SignInPage />} />
       <Route path='/request-access' element={<AccessRequestPage />} />
-      <Route path='/sign-up/*' element={<SignUp routing="path" path="/sign-up" />} />
+      <Route path='/sign-up/*' element={<SignUp routing="path" path="/sign-up" signInUrl={signInUrl} />} />
       <Route path='/user-profile/*' element={<UserProfile routing="path" path="/user-profile" />} />
       <Route path='*' element={<Home/>}/>
     </Routes>

@@ -16,6 +16,7 @@ export const AppProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [isUserLoading, setIsUserLoading] = useState(false);
+    const [userLoadError, setUserLoadError] = useState("");
     const [pickupDate, setPickupDate] = useState("");
     const [returnDate, setReturnDate] = useState("");
     const [cars, setCars] = useState([]);
@@ -35,7 +36,16 @@ export const AppProvider = ({ children }) => {
     // Attaching the header in an interceptor means it is refreshed per request
     // and rotated automatically when Clerk refreshes the session.
     const api = useMemo(() => {
-        const instance = axios.create({ baseURL: import.meta.env.VITE_BASE_URL });
+        const configuredBaseUrl = String(import.meta.env.VITE_BASE_URL || "").trim().replace(/\/$/, "");
+        const isProductionHost = typeof window !== "undefined" && !/^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname);
+        const hasLocalBaseUrl = /^(https?:\/\/)?(localhost|127\.0\.0\.1)(:\d+)?/i.test(configuredBaseUrl);
+        // Never ship a production build that still points at a developer's
+        // localhost API. An empty base URL intentionally uses same-origin
+        // `/api` routes when the frontend and backend share a deployment.
+        const baseURL = isProductionHost && hasLocalBaseUrl ? "" : configuredBaseUrl;
+        // Avoid an endless loading screen when the separate Vercel API is
+        // unavailable or its serverless function is waiting on MongoDB.
+        const instance = axios.create({ baseURL, timeout: 15000 });
 
         instance.interceptors.request.use(async (config) => {
             try {
@@ -63,17 +73,19 @@ export const AppProvider = ({ children }) => {
 
     const fetchUser = useCallback(async () => {
         setIsUserLoading(true);
+        setUserLoadError("");
         try {
             const { data } = await api.get("/api/user/data");
-            if (data.success) {
-                setUser(data.user);
-                if (!data.user.profileCompleted && location.pathname !== "/complete-profile" && !location.pathname.startsWith("/sign-in")) {
-                    navigate("/complete-profile", { replace: true });
-                }
+            if (!data.success || !data.user) throw new Error(data.message || "Could not load your account");
+            setUser(data.user);
+            if (!data.user.profileCompleted && location.pathname !== "/complete-profile" && !location.pathname.startsWith("/sign-in")) {
+                navigate("/complete-profile", { replace: true });
             }
         } catch (error) {
-            if ([401, 403].includes(error.response?.status)) setUser(null);
-            else toast.error(error.message);
+            setUser(null);
+            const message = error.response?.data?.message || error.message || "Could not load your account";
+            setUserLoadError(message);
+            if (![401, 403].includes(error.response?.status)) toast.error(message);
         } finally {
             setIsUserLoading(false);
         }
@@ -111,6 +123,7 @@ export const AppProvider = ({ children }) => {
             fetchUser();
         } else {
             setUser(null);
+            setUserLoadError("");
             setIsUserLoading(false);
         }
     }, [isLoaded, isSignedIn, fetchUser]);
@@ -131,6 +144,7 @@ export const AppProvider = ({ children }) => {
         isSignedIn,
         isLoaded,
         isUserLoading,
+        userLoadError,
         fetchUser,
         logout,
         fetchCars,
