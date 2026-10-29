@@ -147,28 +147,38 @@ export const protect = async (req, res, next) => {
         const email = profile.email;
 
         if (!user) {
-            // A pre-Clerk row may already hold this email address. Adopt it
-            // rather than inserting, because email is unique and a plain create
-            // would fail with E11000 and lock the person out permanently.
-            // $in:[null] matches both a missing field and an explicit null.
-            const legacy = email
-                ? await User.findOne({ email, clerkId: { $in: [null] } })
-                : null;
+            // Email is the stable identity across a Clerk account migration.
+            // Reuse an existing row even when it has an older Clerk ID; otherwise
+            // User.create() collides with the unique email_1 index.
+            const existingByEmail = email ? await User.findOne({ email }) : null;
 
-            if (legacy) {
-                user = legacy;
+            if (existingByEmail) {
+                user = existingByEmail;
                 user.clerkId = clerkId;
                 if (!user.profileCompleted && (!user.name || user.name === user.email || /^new\s+user$/i.test(user.name))) user.name = profile.name;
                 if (profile.phone && !user.phone) user.phone = profile.phone;
                 await user.save();
             } else {
-                user = await User.create({
-                    clerkId,
-                    name: profile.name,
-                    email,
-                    phone: profile.phone,
-                    role: orgRole,
-                });
+                try {
+                    user = await User.create({
+                        clerkId,
+                        name: profile.name,
+                        email,
+                        phone: profile.phone,
+                        role: orgRole,
+                    });
+                } catch (error) {
+                    // Two tabs can authenticate the same new user at once. One
+                    // request may win the insert while the other receives the
+                    // unique-index error; reuse the row created by the winner.
+                    if (error?.code !== 11000) throw error;
+                    user = await User.findOne({ $or: [{ clerkId }, { email }] });
+                    if (!user) throw error;
+                    if (user.clerkId !== clerkId) {
+                        user.clerkId = clerkId;
+                        await user.save();
+                    }
+                }
             }
         }
 
