@@ -13,7 +13,7 @@ const SignInPage = () => {
                 <h1 className="mt-5 text-3xl font-semibold text-gray-900">Welcome back</h1>
                 <p className="mt-2 text-gray-600">Sign in once to book vehicles or list your own.</p>
             </div>
-            <SignIn routing="path" path="/sign-in" signUpUrl="/request-access" />
+            <SignIn routing="path" path="/sign-in" />
             <button type="button" onClick={() => navigate("/request-access")} className="mt-5 text-sm text-primary">
                 New here? Request an account
             </button>

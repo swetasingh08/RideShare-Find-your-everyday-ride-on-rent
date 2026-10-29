@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Navbar from './components/Navbar'
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import CarDetails from './pages/CarDetails'
 import Cars from './pages/Cars'
@@ -79,9 +79,6 @@ const App = () => {
           and accepted invitations resolve instead of falling through to 404. */}
       <Route path='/sign-in/*' element={<SignInPage />} />
       <Route path='/request-access' element={<AccessRequestPage />} />
-      {/* Access is invitation-only. Do not let Clerk's public sign-up flow
-          create an organization and silently make the new person an admin. */}
-      <Route path='/sign-up/*' element={<Navigate to="/request-access" replace />} />
       <Route path='/user-profile/*' element={<UserProfile routing="path" path="/user-profile" />} />
       <Route path='*' element={<Home/>}/>
     </Routes>
