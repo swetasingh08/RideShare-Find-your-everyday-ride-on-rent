@@ -42,7 +42,21 @@ import car_image3 from "./car_image3.png"
 import car_image4 from "./car_image4.png"
 import ride_collage from "./ride_collage.svg"
 
-export const cityList = ['Bengaluru', 'Mumbai', 'Delhi NCR', 'Hyderabad', 'Chennai', 'Pune', 'Kolkata', 'Ahmedabad']
+export const cityList = [
+    'Agartala', 'Agra', 'Ahmedabad', 'Ahmednagar', 'Aizawl', 'Ajmer', 'Aligarh', 'Amravati', 'Amritsar',
+    'Anand', 'Asansol', 'Aurangabad (Chhatrapati Sambhajinagar)', 'Bareilly', 'Belagavi', 'Bengaluru', 'Bhagalpur',
+    'Bharatpur', 'Bhilai', 'Bhopal', 'Bhubaneswar', 'Bikaner', 'Bilaspur', 'Bokaro', 'Chandigarh', 'Chennai',
+    'Coimbatore', 'Cuttack', 'Dehradun', 'Delhi NCR', 'Dhanbad', 'Dibrugarh', 'Durgapur', 'Erode', 'Faridabad',
+    'Gandhinagar', 'Gangtok', 'Ghaziabad', 'Gorakhpur', 'Guntur', 'Gurugram', 'Guwahati', 'Gwalior', 'Haridwar',
+    'Hisar', 'Howrah', 'Hubballi-Dharwad', 'Hyderabad', 'Imphal', 'Indore', 'Jabalpur', 'Jaipur', 'Jalandhar',
+    'Jammu', 'Jamnagar', 'Jamshedpur', 'Jhansi', 'Jodhpur', 'Kannur', 'Kanpur', 'Kochi', 'Kolhapur', 'Kolkata',
+    'Kollam', 'Kota', 'Kozhikode', 'Kurnool', 'Lucknow', 'Ludhiana', 'Madurai', 'Mangaluru', 'Mathura', 'Meerut',
+    'Moradabad', 'Mumbai', 'Mysuru', 'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'Nellore', 'Noida', 'Panaji',
+    'Patna', 'Puducherry', 'Pune', 'Raipur', 'Rajahmundry', 'Rajkot', 'Ranchi', 'Rourkela', 'Salem', 'Sangli',
+    'Shillong', 'Shimla', 'Siliguri', 'Solapur', 'Srinagar', 'Surat', 'Thane', 'Thiruvananthapuram', 'Thrissur',
+    'Tiruchirappalli', 'Tirunelveli', 'Tiruppur', 'Udaipur', 'Ujjain', 'Vadodara', 'Varanasi', 'Vijayawada',
+    'Visakhapatnam', 'Warangal'
+]
 
 export const assets = {
     logo,
