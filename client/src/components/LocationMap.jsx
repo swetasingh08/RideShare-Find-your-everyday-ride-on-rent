@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react'
 import L from 'leaflet'
 import { MapContainer, Marker, Polyline, Popup, TileLayer, useMap, useMapEvents } from 'react-leaflet'
 import { normalizeCoordinates } from '../utils/coordinates'
+import GoogleLocationMap from './GoogleLocationMap'
 
 const fallbackCenter = [12.9716, 77.5946]
 
@@ -37,7 +38,7 @@ const MapViewport = ({ center, points }) => {
   const map = useMap()
   useEffect(() => {
     if (points.length > 1) map.fitBounds(points, { padding: [28, 28], maxZoom: 14, animate: true })
-    else map.setView(center, map.getZoom(), { animate: true })
+    else map.setView(center, points.length ? 16 : 5, { animate: true })
   }, [center, map, points])
   return null
 }
@@ -67,9 +68,14 @@ const LocationMap = ({ cars = [], userLocation, userLabel = 'Your location', rou
   const carPoints = mappableCars.map(car => [car.coordinates.latitude, car.coordinates.longitude])
   const points = useMemo(() => [...markerPoints, ...routePoints, ...(userPoint ? [userPoint] : []), ...carPoints], [carPoints, markerPoints, routePoints, userPoint])
   const center = userPoint || markerPoints[0] || (mappableCars.length ? carPoints[0] : fallbackCenter)
+  const googleMapsEnabled = Boolean(import.meta.env.VITE_GOOGLE_MAPS_API_KEY)
+
+  if (googleMapsEnabled) return <div className='h-80 overflow-hidden rounded-xl border border-borderColor shadow-sm'>
+    <GoogleLocationMap center={center} points={points} cars={mappableCars} userCoordinates={userCoordinates} userLabel={userLabel} markers={mappableMarkers} routePoints={routePoints} onSelect={onSelect} onMapClick={onMapClick} />
+  </div>
 
   return <div className='h-80 overflow-hidden rounded-xl border border-borderColor shadow-sm'>
-    <MapContainer center={center} zoom={userLocation || mappableCars.length || markerPoints.length ? 12 : 5} scrollWheelZoom className='h-full w-full'>
+    <MapContainer center={center} zoom={points.length ? 16 : 5} scrollWheelZoom className='h-full w-full'>
       <MapViewport center={center} points={points} />
       {onMapClick && <MapClickHandler onMapClick={onMapClick} />}
       <TileLayer attribution='&copy; OpenStreetMap contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />

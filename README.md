@@ -364,6 +364,7 @@ Create `client/.env`:
 
 ```env
 VITE_BASE_URL=http://localhost:3000
+VITE_GOOGLE_MAPS_API_KEY=your_browser_restricted_maps_key
 VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 VITE_CLERK_ORG_SLUG=car-rental
 VITE_CLERK_SIGN_IN_URL=/sign-in
@@ -373,12 +374,14 @@ VITE_CURRENCY=₹
 | Variable | Description |
 |----------|-------------|
 | `VITE_BASE_URL` | Backend API URL |
+| `VITE_GOOGLE_MAPS_API_KEY` | Browser key for the Google Maps JavaScript API, restricted to your frontend's HTTP referrers |
 | `VITE_CLERK_PUBLISHABLE_KEY` | Clerk frontend publishable key |
 | `VITE_CLERK_ORG_SLUG` | Clerk organization slug |
 | `VITE_CLERK_SIGN_IN_URL` | Frontend sign-in route |
 | `VITE_CURRENCY` | Currency symbol displayed in the application |
 
 > In Vercel, `VITE_BASE_URL` must point to the backend deployment URL, not the frontend URL.
+> Configure `VITE_GOOGLE_MAPS_API_KEY` in the frontend environment and redeploy. Keep the server key in `server/.env`; do not copy it into the browser configuration.
 
 ### Backend Environment Variables
 
