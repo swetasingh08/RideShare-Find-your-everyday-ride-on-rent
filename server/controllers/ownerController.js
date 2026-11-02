@@ -20,7 +20,7 @@ export const addCar = async (req, res)=>{
         const {_id} = req.user;
         let car = JSON.parse(req.body.carData);
         const coordinates = normalizeCoordinates(car.coordinates);
-        if (!coordinates) return res.status(400).json({ success: false, message: "Valid pickup latitude and longitude are required" });
+        if (!coordinates) return res.status(400).json({ success: false, message: "Set a valid vehicle pickup point using the address, device location, or map" });
         car.coordinates = coordinates;
         car.instantBooking = false;
         car.approvalRequired = true;
@@ -66,7 +66,7 @@ export const updateCar = async (req, res) => {
         if (!car) return res.status(404).json({ success: false, message: "Vehicle not found" });
         if (carData.coordinates !== undefined) {
             const coordinates = normalizeCoordinates(carData.coordinates);
-            if (!coordinates) return res.status(400).json({ success: false, message: "Valid pickup latitude and longitude are required" });
+            if (!coordinates) return res.status(400).json({ success: false, message: "Set a valid vehicle pickup point using the address, device location, or map" });
             carData.coordinates = coordinates;
         }
         const allowed = Object.keys(Car.schema.paths).filter((key) => !['_id', 'owner', 'image', 'images', 'documents', 'verificationStatus', 'bookingLockToken', 'bookingLockUntil', 'createdAt', 'updatedAt', '__v'].includes(key));

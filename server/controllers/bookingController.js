@@ -162,7 +162,7 @@ export const createBooking = async (req, res)=>{
 
             const pickupPoint = normalizeCoordinates(pickupCoordinates) || normalizeCoordinates(carData.coordinates);
             const dropPoint = normalizeCoordinates(dropCoordinates);
-            if (!pickupPoint) return res.status(400).json({ success: false, message: "Pickup coordinates are required and must be valid" });
+            if (!pickupPoint) return res.status(400).json({ success: false, message: "Select a valid pickup point before booking" });
             if (!dropPoint || !String(dropLocation || '').trim()) return res.status(400).json({ success: false, message: "Choose and resolve a valid drop location" });
 
             const isAvailable = await checkAvailability(car, pickupDate, returnDate)

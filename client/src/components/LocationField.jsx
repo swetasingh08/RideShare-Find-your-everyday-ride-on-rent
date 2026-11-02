@@ -12,7 +12,6 @@ const LocationField = ({ label, value, onChange, onSearch, onUseCurrent, onSelec
       <p className='text-[11px] font-semibold uppercase tracking-wide text-gray-500'>Choose the exact result</p>
       {suggestions.map((suggestion, index) => <button type='button' key={`${suggestion.latitude}-${suggestion.longitude}-${index}`} onClick={() => onSelectSuggestion?.(suggestion)} className='block w-full rounded-xl border border-borderColor bg-light/60 px-3 py-2 text-left text-xs hover:border-primary hover:bg-primary/5'>
         <span className='block font-medium text-gray-800'>{suggestion.displayName}</span>
-        <span className='mt-1 block text-[10px] text-gray-500'>{Number(suggestion.latitude).toFixed(6)}, {Number(suggestion.longitude).toFixed(6)}</span>
       </button>)}
     </div>}
     <div className='mt-2 flex flex-wrap gap-3'>

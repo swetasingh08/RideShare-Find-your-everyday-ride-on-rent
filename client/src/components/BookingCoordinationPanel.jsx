@@ -28,8 +28,8 @@ const BookingCoordinationPanel = ({ booking, viewer, axios }) => {
             {booking.status === 'confirmed' && <div className="rounded-lg bg-accent/10 px-3 py-2 text-right"><p className="text-[10px] uppercase tracking-wide text-gray-500">Handover code</p><p className="font-bold tracking-[0.25em] text-accent">{booking.handoverCode || '------'}</p></div>}
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-lg bg-light p-3"><p className="text-xs text-gray-500">Pickup point</p><p className="mt-1 text-sm font-medium text-gray-800">{booking.pickupLocation || booking.car?.pickupAddress || booking.car?.location || 'Pickup details pending'}</p><p className="mt-1 text-xs text-gray-500">{booking.pickupCoordinates ? `${Number(booking.pickupCoordinates.latitude).toFixed(5)}, ${Number(booking.pickupCoordinates.longitude).toFixed(5)}` : 'Coordinates pending'}</p></div>
-            <div className="rounded-lg bg-light p-3"><p className="text-xs text-gray-500">Drop point</p><p className="mt-1 text-sm font-medium text-gray-800">{booking.dropLocation || 'Drop details pending'}</p><p className="mt-1 text-xs text-gray-500">{booking.dropCoordinates ? `${Number(booking.dropCoordinates.latitude).toFixed(5)}, ${Number(booking.dropCoordinates.longitude).toFixed(5)}` : 'Coordinates pending'}</p></div>
+            <div className="rounded-lg bg-light p-3"><p className="text-xs text-gray-500">Pickup point</p><p className="mt-1 text-sm font-medium text-gray-800">{booking.pickupLocation || booking.car?.pickupAddress || booking.car?.location || 'Pickup details pending'}</p></div>
+            <div className="rounded-lg bg-light p-3"><p className="text-xs text-gray-500">Drop point</p><p className="mt-1 text-sm font-medium text-gray-800">{booking.dropLocation || 'Drop details pending'}</p></div>
             <div className="rounded-lg bg-light p-3">
                 <p className="text-xs text-gray-500">{isOwner ? 'Renter contact' : 'Vehicle owner contact'}</p>
                 <div className="mt-2 flex items-center gap-3">

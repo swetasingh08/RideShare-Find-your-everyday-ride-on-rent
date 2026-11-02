@@ -3,6 +3,7 @@ import Booking from "../models/Booking.js";
 import User from "../models/User.js";
 import AccessRequest from "../models/AccessRequest.js";
 import { blockingBookingStatuses } from "../services/bookingService.js";
+import { normalizeCoordinates } from "../services/locationService.js";
 
 const addBookingState = async (cars, pickupDate, returnDate) => {
     const carIds = cars.map(car => car._id);
@@ -94,10 +95,9 @@ const distanceInKm = (latitude, longitude, targetLatitude, targetLongitude) => {
 
 export const getNearbyCars = async (req, res) => {
     try {
-        const latitude = Number(req.query.lat);
-        const longitude = Number(req.query.lng);
+        const userCoordinates = normalizeCoordinates({ latitude: req.query.lat, longitude: req.query.lng });
         const radius = Math.min(Math.max(Number(req.query.radius) || 25, 1), 100);
-        if (!Number.isFinite(latitude) || !Number.isFinite(longitude) || latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+        if (!userCoordinates) {
             return res.status(400).json({ success: false, message: "A valid latitude and longitude are required" });
         }
 
@@ -106,10 +106,9 @@ export const getNearbyCars = async (req, res) => {
             .populate('owner', 'name image createdAt totalTrips averageRating responseRate responseTime');
         const carsWithState = await addBookingState(cars.filter(car => car.owner));
         const nearbyCars = carsWithState.map(car => {
-            const carLatitude = Number(car.coordinates?.latitude);
-            const carLongitude = Number(car.coordinates?.longitude);
-            if (!Number.isFinite(carLatitude) || !Number.isFinite(carLongitude)) return null;
-            return { ...car, distanceKm: Math.round(distanceInKm(latitude, longitude, carLatitude, carLongitude) * 10) / 10 };
+            const carCoordinates = normalizeCoordinates(car.coordinates);
+            if (!carCoordinates) return null;
+            return { ...car, distanceKm: Math.round(distanceInKm(userCoordinates.latitude, userCoordinates.longitude, carCoordinates.latitude, carCoordinates.longitude) * 10) / 10 };
         }).filter(car => car && car.distanceKm <= radius).sort((first, second) => first.distanceKm - second.distanceKm);
 
         res.json({ success: true, nearbyCars, radiusKm: radius });

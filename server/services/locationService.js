@@ -57,9 +57,13 @@ const straightLineRoute = (origin, destination) => {
 };
 
 export const normalizeCoordinates = (value) => {
-    const latitude = Number(value?.latitude);
-    const longitude = Number(value?.longitude);
+    const rawLatitude = value?.latitude;
+    const rawLongitude = value?.longitude;
+    if (rawLatitude == null || rawLongitude == null || String(rawLatitude).trim() === "" || String(rawLongitude).trim() === "") return null;
+    const latitude = Number(rawLatitude);
+    const longitude = Number(rawLongitude);
     if (!Number.isFinite(latitude) || !Number.isFinite(longitude) || latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) return null;
+    if (latitude === 0 && longitude === 0) return null;
     return { latitude: Number(latitude.toFixed(6)), longitude: Number(longitude.toFixed(6)) };
 };
 
