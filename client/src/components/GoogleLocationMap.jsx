@@ -30,7 +30,7 @@ const GoogleLocationMap = ({ center, points, cars, userCoordinates, userLabel, m
   const mapElement = useRef(null)
   const mapObject = useRef(null)
   const overlays = useRef([])
-  const [loadError, setLoadError] = useState(false)
+  const [loadError, setLoadError] = useState('')
   const [mapReady, setMapReady] = useState(false)
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
@@ -48,9 +48,17 @@ const GoogleLocationMap = ({ center, points, cars, userCoordinates, userLabel, m
         clickableIcons: false,
       })
       setMapReady(true)
-    }).catch(() => { if (active) setLoadError(true) })
+    }).catch(() => { if (active) setLoadError('Google Maps failed to load. Check the API key, billing, and Maps JavaScript API settings.') })
     return () => { active = false }
   }, [apiKey])
+
+  useEffect(() => {
+    const previousAuthFailure = window.gm_authFailure
+    window.gm_authFailure = () => setLoadError('Google rejected this key. Check its Maps JavaScript API restriction and allowed website referrers.')
+    return () => {
+      if (window.gm_authFailure) window.gm_authFailure = previousAuthFailure
+    }
+  }, [])
 
   useEffect(() => {
     const map = mapObject.current
@@ -102,7 +110,13 @@ const GoogleLocationMap = ({ center, points, cars, userCoordinates, userLabel, m
     return () => listener.remove()
   }, [onMapClick, loadError, mapReady])
 
-  return <div className='h-80 w-full' ref={mapElement} role='application' aria-label='Google map'>{loadError && <div className='flex h-full items-center justify-center text-sm text-red-600'>Google Maps failed to load. Check the browser API key and allowed referrers.</div>}</div>
+  if (!apiKey) return <div className='flex h-80 w-full items-center justify-center bg-slate-100 px-6 text-center text-sm text-red-700' role='alert'>Google Maps key is missing from this build. Set <code className='mx-1'>VITE_GOOGLE_MAPS_API_KEY</code> in the frontend environment and redeploy.</div>
+
+  return <div className='relative h-80 w-full'>
+    <div className='h-full w-full' ref={mapElement} role='application' aria-label='Google map' />
+    {!mapReady && !loadError && <div className='absolute inset-0 flex items-center justify-center bg-slate-100 text-sm text-slate-600'>Loading Google Maps…</div>}
+    {loadError && <div className='absolute inset-0 flex items-center justify-center bg-slate-100 px-6 text-center text-sm text-red-700' role='alert'>{loadError}</div>}
+  </div>
 }
 
 export default GoogleLocationMap
